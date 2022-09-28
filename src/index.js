@@ -27,7 +27,7 @@ async function run() {
         privateKeyFileBase64
       );
       console.log("Starting automatic token generation...");
-      tokenString = token.generate(appId, issuerId, keyId);
+      tokenString = token.generate(appId, issuerId, keyId, platform);
     }
 
     console.log("Sending App Store Connect API request...");

@@ -23,11 +23,11 @@ export default class Token {
     }
   }
 
-  generate(appId, issuerId, keyId) {
+  generate(appId, issuerId, keyId, platform) {
     const exp = "5m";
     const alg = "ES256";
     const aud = "appstoreconnect-v1";
-    const scope = `GET /v1/apps/${appId}/appStoreVersions`;
+    const scope = `GET /v1/apps/${appId}/appStoreVersions?filter[platform]=${platform}`;
     const payload = { iss: issuerId, aud: aud, scope: [scope] };
     const jwtOptions = {
       expiresIn: exp,
