@@ -21,9 +21,9 @@ To get the app id you can either navigate to your app in the App Store with your
 5. Enter the name of your key (e.g. `your-app-name-api-key`) and select the desired role (e.g. `Developer`).
 6. A new key will appear in your Keys list.
 7. Tap "**Download API Key**" to download the `AuthKey_{key-id}.p8` file.  
-**Note**: You won't be able to download it afterwards.
+   **Note**: You won't be able to download it afterwards.
 8. Copy **Issuer ID** and **Key ID** on the same page.  
-**Note**: You will be able to copy them afterwards.
+   **Note**: You will be able to copy them afterwards.
 
 **Note**: It's suggested to store the sensitive information (like json web token, private key, key id and issuer id) as **[Github Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)** (please check also **[how to store files as secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#storing-base64-binary-blobs-as-secrets)**).
 
@@ -49,7 +49,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Get App Store Version
         id: appstore_version
         uses: ilyalehchylin/appstore-connect-app-version@v1.1
@@ -61,7 +61,8 @@ jobs:
           private-key-raw: ${{ secrets.PRIVATE_KEY_RAW }}
           private-key-p8-base64: ${{ secrets.PRIVATE_KEY_FILE_BASE64 }}
           private-key-p8-path: ./AuthKey.p8
-          
+          platform: "IOS"
+
       - name: Get results
         run: |
           echo "App Store latest version: ${{ steps.appstore_version.outputs.app-version-latest }}"
@@ -81,7 +82,7 @@ You can find some samples **[here](https://github.com/ilyalehchylin/app-latest-v
 There are no **default values** for the inputs.
 
 | Input                   | Required | Description                                                                                       |
-| :---                    | :---     | :---                                                                                              |
+| :---------------------- | :------- | :------------------------------------------------------------------------------------------------ |
 | `app-id`                | true     | App Store application identifier.                                                                 |
 | `json-web-token`        | false    | JSON Web Token for the App Store API request.                                                     |
 | `key-id`                | false    | Private key ID from App Store Connect.                                                            |
@@ -89,19 +90,20 @@ There are no **default values** for the inputs.
 | `private-key-p8-path`   | false    | Private key file downloaded from the API Keys page in App Store Connect (\*.p8 file).             |
 | `private-key-p8-base64` | false    | Private key downloaded from the API Keys page in App Store Connect (\*.p8 file) in Base64 format. |
 | `private-key-raw`       | false    | Raw private key downloaded from the API Keys page in App Store Connect.                           |
+| `platform`              | false    | Platform to get version information for (possible values: `IOS`, `MAC_OS`, `TV_OS`)               |
 
 ## Action Outputs
 
-| Output                          | Description                                                                                         |
-| :---                            | :---                                                                                                |
-| `app-version-latest`            | Latest app version, e.g. `1.0.1`.                                                                   |
-| `app-state-latest`              | Latest app state. [Possible values](https://developer.apple.com/documentation/appstoreconnectapi/appstoreversionstate).                                                    |
-| `app-release-type-latest`       | Latest app release type. Possible values: `MANUAL`, `AFTER_APPROVAL`, `SCHEDULED`.                  |
-| `version-created-date-latest`   | Latest app version created date, e.g. `2022-06-08T02:47:00-07:00`.                                  |
-| `app-version-previous`          | Previous app version, e.g. `1.0.0`.                                                                 |
-| `app-state-previous`            | Previous app state. [Possible values](https://developer.apple.com/documentation/appstoreconnectapi/appstoreversionstate).                                                    |
-| `app-release-type-previous`     | Previous app release type. Possible values: `MANUAL`, `AFTER_APPROVAL`, `SCHEDULED`.                |
-| `version-created-date-previous` | Previous app version created date. `2022-04-29T10:03:06-07:00`.                                     |
+| Output                          | Description                                                                                                               |
+| :------------------------------ | :------------------------------------------------------------------------------------------------------------------------ |
+| `app-version-latest`            | Latest app version, e.g. `1.0.1`.                                                                                         |
+| `app-state-latest`              | Latest app state. [Possible values](https://developer.apple.com/documentation/appstoreconnectapi/appstoreversionstate).   |
+| `app-release-type-latest`       | Latest app release type. Possible values: `MANUAL`, `AFTER_APPROVAL`, `SCHEDULED`.                                        |
+| `version-created-date-latest`   | Latest app version created date, e.g. `2022-06-08T02:47:00-07:00`.                                                        |
+| `app-version-previous`          | Previous app version, e.g. `1.0.0`.                                                                                       |
+| `app-state-previous`            | Previous app state. [Possible values](https://developer.apple.com/documentation/appstoreconnectapi/appstoreversionstate). |
+| `app-release-type-previous`     | Previous app release type. Possible values: `MANUAL`, `AFTER_APPROVAL`, `SCHEDULED`.                                      |
+| `version-created-date-previous` | Previous app version created date. `2022-04-29T10:03:06-07:00`.                                                           |
 
 ## Contributing
 
